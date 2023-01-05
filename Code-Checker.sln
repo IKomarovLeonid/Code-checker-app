@@ -19,6 +19,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API", "src\Services\API\API
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Processing", "src\Business\Processing\Processing.csproj", "{BDE984DF-010D-4B7C-B59C-1E93F068D7B4}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{34DEF111-C8F9-4CEE-94FA-A728D03A53C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Unit", "src\Tests\Unit\Unit.csproj", "{EADE29A2-0A69-4768-A8A5-07614FCE5E43}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +49,10 @@ Global
 		{BDE984DF-010D-4B7C-B59C-1E93F068D7B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BDE984DF-010D-4B7C-B59C-1E93F068D7B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BDE984DF-010D-4B7C-B59C-1E93F068D7B4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EADE29A2-0A69-4768-A8A5-07614FCE5E43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EADE29A2-0A69-4768-A8A5-07614FCE5E43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EADE29A2-0A69-4768-A8A5-07614FCE5E43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EADE29A2-0A69-4768-A8A5-07614FCE5E43}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -55,6 +63,7 @@ Global
 		{58E163F7-641A-43EF-B2F6-4ED7CD993091} = {3A0F6CFD-1866-40E9-9EB5-D280C773E4C1}
 		{1692BAC3-D682-4317-BF24-343B1608ED60} = {55860ADE-FD2E-4B86-852A-D4CA7F23DA59}
 		{BDE984DF-010D-4B7C-B59C-1E93F068D7B4} = {282FDF33-A651-4CA5-B4E7-3C81C10D2CFA}
+		{EADE29A2-0A69-4768-A8A5-07614FCE5E43} = {34DEF111-C8F9-4CEE-94FA-A728D03A53C5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CB42354F-98AF-4146-BE4F-AEF97244D020}
