@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.Collections.Generic;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Processing.Src
 {
@@ -14,6 +9,8 @@ namespace Processing.Src
 
         public MethodInfo Info { get; private set; }
 
+        public bool IsSuccess { get; private set; }
+
         private ParsingResult() { }
 
         public static ParsingResult Success(MethodInfo info)
@@ -21,7 +18,8 @@ namespace Processing.Src
             return new ParsingResult()
             {
                 Info = info,
-                Errors = null
+                Errors = null,
+                IsSuccess = true
             };
         }
 
@@ -29,7 +27,8 @@ namespace Processing.Src
         {
             return new ParsingResult()
             {
-                Errors = messages
+                Errors = messages,
+                IsSuccess = false
             };
         }
     }
