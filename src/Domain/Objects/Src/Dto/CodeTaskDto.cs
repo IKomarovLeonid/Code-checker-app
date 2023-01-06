@@ -2,7 +2,7 @@
 
 namespace Objects.Dto
 {
-    internal class CodeTaskDto
+    public class CodeTaskDto
     {
         public ulong Id { get; set; }
 
@@ -10,9 +10,11 @@ namespace Objects.Dto
 
         public string Code { get; set; }
 
-        public CompilationStatus Compilation { get; set; }
+        public string Description { get; set; }
 
-        public TestingStatus Status { get; set; }
+        public string Title { get; set; }
+
+        public TaskStatus Status { get; set; }
 
         public DateTime CreatedUtc { get; set; }
 

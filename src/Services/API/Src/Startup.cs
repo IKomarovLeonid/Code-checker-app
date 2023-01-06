@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.FileProviders;
 using Newtonsoft.Json.Converters;
+using Database;
 
 namespace API.Src
 {
@@ -16,6 +17,8 @@ namespace API.Src
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddCors();
+
+            services.AddDbContext<ApplicationContext>();
 
             services.AddMvcCore(options => options.EnableEndpointRouting = false)
                 .AddNewtonsoftJson(o =>
@@ -39,6 +42,8 @@ namespace API.Src
                         .AddFilter("NToastNotify", LogLevel.Warning)
                         .AddConsole();
                 });
+
+            services.AddHostedService<HostedService>();
 
             var builder = AutofacBuilder.Build();
 

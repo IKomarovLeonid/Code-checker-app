@@ -1,10 +1,11 @@
 ﻿namespace Objects.Dto
 {
-    enum TestingStatus
+    public enum TaskStatus
     {
         Undefined,
         Pending,
         Processing,
+        CompilationError,
         Successful,
         NotSuccessful
     }
