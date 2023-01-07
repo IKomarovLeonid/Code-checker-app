@@ -1,16 +1,18 @@
-﻿using Microsoft.AspNetCore.Builder;
-using System;
+﻿using System;
 using System.IO;
-using API.Src.Ioc;
+using API.Ioc;
 using Autofac.Extensions.DependencyInjection;
+using Database;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json.Converters;
-using Database;
+using Processing;
 
-namespace API.Src
+namespace API
 {
     public class Startup
     {
@@ -42,6 +44,9 @@ namespace API.Src
                         .AddFilter("NToastNotify", LogLevel.Warning)
                         .AddConsole();
                 });
+
+            var processingAssembly = AppDomain.CurrentDomain.Load(ProcessingAssembly.Value);
+            services.AddMediatR(processingAssembly);
 
             services.AddHostedService<HostedService>();
 

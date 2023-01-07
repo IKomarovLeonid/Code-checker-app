@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 
-namespace Processing.Src
+namespace Processing.Parsing
 {
     public class ParsingResult
     {
@@ -11,15 +11,21 @@ namespace Processing.Src
 
         public bool IsSuccess { get; private set; }
 
+        public string Namespace { get; private set; }
+
+        public string MethodToCall { get; private set; }
+
         private ParsingResult() { }
 
-        public static ParsingResult Success(MethodInfo info)
+        public static ParsingResult Success(MethodInfo info, string methodToCall, string nameSpace)
         {
             return new ParsingResult()
             {
                 Info = info,
                 Errors = null,
-                IsSuccess = true
+                IsSuccess = true,
+                Namespace = nameSpace,
+                MethodToCall = methodToCall
             };
         }
 

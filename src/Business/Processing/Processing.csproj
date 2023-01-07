@@ -9,4 +9,10 @@
 		<PackageReference Include="System.CodeDom" Version="5.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Domain\Database\Database.csproj" />
+	  <ProjectReference Include="..\..\Tests\SolutionsTests\SolutionsTests.csproj" />
+	  <ProjectReference Include="..\Shared\Shared.csproj" />
+	</ItemGroup>
+
 </Project>

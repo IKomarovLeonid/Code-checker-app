@@ -20,6 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\..\Business\Processing\Processing.csproj" />
 	  <ProjectReference Include="..\..\Domain\Database\Database.csproj" />
 	</ItemGroup>
 

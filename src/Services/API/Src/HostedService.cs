@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Database;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Processing.Listeners;
+using Processing.Workers;
 
 namespace API
 {
@@ -18,11 +20,14 @@ namespace API
         public async Task StartAsync(CancellationToken cancellationToken)
         {
             await MigrateAsync(cancellationToken);
+            StartWorkers();
+            StartListeners();
         }
 
-        public Task StopAsync(CancellationToken cancellationToken)
+        public async Task StopAsync(CancellationToken cancellationToken)
         {
-            return Task.CompletedTask;
+            StopWorkers();
+            StartListeners();
         }
 
         private async Task MigrateAsync(CancellationToken cancellationToken)
@@ -32,6 +37,42 @@ namespace API
             var db = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
 
             await db.Database.EnsureCreatedAsync(cancellationToken);
+        }
+
+        private void StartWorkers()
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var worker = scope.ServiceProvider.GetService<TestsWorker>();
+
+            worker.Start();
+        }
+
+        private void StopWorkers()
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var worker = scope.ServiceProvider.GetService<TestsWorker>();
+
+            worker.Stop();
+        }
+
+        private void StartListeners()
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var listener = scope.ServiceProvider.GetService<SolutionsListener>();
+
+            listener.Start();
+        }
+
+        private void StopListeners()
+        {
+            using var scope = _scopeFactory.CreateScope();
+
+            var listener = scope.ServiceProvider.GetService<SolutionsListener>();
+
+            listener.Stop();
         }
     }
 }

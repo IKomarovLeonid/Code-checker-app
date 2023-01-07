@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
+using Database.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Objects.Dto;
-using Persistence.Configurations;
 
 namespace Database
 {
@@ -25,10 +25,13 @@ namespace Database
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new TaskDbConfiguration());
+            modelBuilder.ApplyConfiguration(new CodeSolutionDbConfiguration());
 
             base.OnModelCreating(modelBuilder);
         }
 
         public DbSet<CodeTaskDto> Tasks { get; set; }
+
+        public DbSet<CodeSolutionDto> Solutions { get; set; }
     }
 }

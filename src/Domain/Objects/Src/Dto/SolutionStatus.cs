@@ -1,6 +1,6 @@
 ﻿namespace Objects.Dto
 {
-    public enum TaskStatus
+    public enum SolutionStatus
     {
         Undefined,
         Pending,
