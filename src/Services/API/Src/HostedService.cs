@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Database;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NLog;
 using Processing.Listeners;
 using Processing.Workers;
 
@@ -11,6 +12,8 @@ namespace API
     internal class HostedService : IHostedService
     {
         private readonly IServiceScopeFactory _scopeFactory;
+
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(HostedService));
 
         public HostedService(IServiceScopeFactory factory)
         {
@@ -27,16 +30,20 @@ namespace API
         public async Task StopAsync(CancellationToken cancellationToken)
         {
             StopWorkers();
-            StartListeners();
+            StopListeners();
         }
 
         private async Task MigrateAsync(CancellationToken cancellationToken)
         {
+            _logger.Info("Start migrations...");
+
             using var scope = _scopeFactory.CreateScope();
 
             var db = scope.ServiceProvider.GetRequiredService<ApplicationContext>();
 
-            await db.Database.EnsureCreatedAsync(cancellationToken);
+            var isCreated = await db.Database.EnsureCreatedAsync(cancellationToken);
+
+            _logger.Info(isCreated ? "Migrations done" : "Skip migrations: database already exists");
         }
 
         private void StartWorkers()

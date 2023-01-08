@@ -1,4 +1,6 @@
-﻿using Objects.Models;
+﻿using NLog;
+using Objects.Models;
+using Processing.Workers;
 using SolutionsTests;
 using System;
 
@@ -6,6 +8,8 @@ namespace Processing.Logic
 {
     public class TestsRunner
     {
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(TestsRunner));
+
         public TestsRunner()
         {
 
@@ -13,12 +17,12 @@ namespace Processing.Logic
 
         public SolutionResult Execute(CodeSolution solution)
         {
-            ulong totalTests = 3;
-            ulong passedTests = 0;
+            _logger.Info($"Execute tests suit from library for solution '{solution.Id}'");
 
-            Console.WriteLine($"Execute from library");
+            var calc = new CalculatorTests(solution.MethodInfo, solution.MethodName, 3);
 
-            var calc = new CalculatorTests(solution.MethodInfo, solution.MethodName);
+            var totalTests = calc.TotalTests;
+            var passedTests = 0u;
 
             try
             {
@@ -28,10 +32,10 @@ namespace Processing.Logic
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.ToString());
+                _logger.Info(ex.ToString());
             }
 
-            Console.WriteLine($"Execute from library - DONE");
+            _logger.Info($"Execute from library - DONE");
 
 
             return new SolutionResult()
@@ -44,17 +48,17 @@ namespace Processing.Logic
 
         private bool RunSingle(ulong id, Action action)
         {
-            Console.WriteLine($"Perform test {id}...");
+            _logger.Info($"Perform test {id}...");
             try
             {
                 action.Invoke();
-                Console.WriteLine($"Test {id} passed.");
+                _logger.Info($"Test {id} passed.");
                 return true;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Test {id} failed: ");
-                Console.WriteLine(ex.Message);
+                _logger.Info($"Test {id} failed: ");
+                _logger.Info(ex.Message);
             }
 
             return false;

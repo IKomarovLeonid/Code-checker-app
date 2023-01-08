@@ -9,12 +9,16 @@ namespace SolutionsTests
         private readonly MethodInfo _info;
         private readonly string _methodName;
 
+        public readonly ulong TotalTests;
+
         public CalculatorTests() { }
 
-        public CalculatorTests(MethodInfo info, string methodName)
+        public CalculatorTests(MethodInfo info, string methodName, ulong totalTests)
         {
             _info = info;
             _methodName = methodName;
+
+            TotalTests = totalTests;
         }
 
         [Test]

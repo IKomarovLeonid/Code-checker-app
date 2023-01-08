@@ -3,6 +3,7 @@ using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 using Database;
+using NLog;
 using Objects.Dto;
 using Objects.Models;
 using Processing.Logic;
@@ -13,6 +14,8 @@ namespace Processing.Workers
     {
         private readonly TestsRunner _runner;
         private readonly IStorage<CodeSolutionDto> _storage;
+
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(TestsWorker));
 
         private readonly BlockingCollection<CodeSolution> _solutions = new BlockingCollection<CodeSolution>();
         private Task _processingTask;
@@ -25,7 +28,9 @@ namespace Processing.Workers
 
         public void Start()
         {
+            _logger.Info("Start worker...");
             _processingTask = Task.Factory.StartNew(Process, TaskCreationOptions.LongRunning);
+            _logger.Info("Worker has been started");
         }
 
         public void Stop()
@@ -51,10 +56,11 @@ namespace Processing.Workers
             }
             catch (InvalidOperationException)
             {
+                _logger.Info("Worker has been stopped");
             }
             catch (Exception ex)
             {
-
+                _logger.Error(ex.Message);
             }
         }
 
@@ -72,8 +78,7 @@ namespace Processing.Workers
 
             await _storage.UpdateAsync(dto, CancellationToken.None);
         }
-
-        public override string ToString() => nameof(TestsWorker);
+        
         public void Dispose()
         {
             _solutions?.CompleteAdding();

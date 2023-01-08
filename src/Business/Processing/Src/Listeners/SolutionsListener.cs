@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Database;
+using NLog;
 using Objects;
 using Objects.Dto;
 using Processing.Parsing;
@@ -17,6 +18,8 @@ namespace Processing.Listeners
         private readonly CodeParser _parser;
         private readonly IWorker _worker;
 
+        private readonly ILogger _logger = LogManager.GetLogger(nameof(SolutionsListener));
+
         private IDisposable _subscription;
 
         public SolutionsListener(IStorage<CodeSolutionDto> storage, IStorage<CodeTaskDto> tasks, CodeParser parser, TestsWorker worker)
@@ -29,12 +32,17 @@ namespace Processing.Listeners
 
         public void Start()
         {
+            _logger.Info("Start listener...");
             _subscription = _storage.Subscribe(ProcessEvents);
+            _logger.Info("Listener has been started");
         }
 
         public void Stop()
         {
+            _logger.Info("Stop listener...");
             _subscription?.Dispose();
+
+            _logger.Info("Listener has been stopped");
         }
 
         public void Dispose()
@@ -59,6 +67,8 @@ namespace Processing.Listeners
 
             if (task == null)
             {
+                _logger.Error($"Failed to get task by id '{dto.TaskId}' from storage");
+
                 dto.Errors = $"Failed to get task by id '{dto.TaskId}'";
                 await _storage.UpdateAsync(dto, cts);
                 return;
