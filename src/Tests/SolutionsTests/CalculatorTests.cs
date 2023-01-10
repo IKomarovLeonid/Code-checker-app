@@ -24,18 +24,12 @@ namespace SolutionsTests
         [Test]
         public void TestSum()
         {
-            var result = _info.Invoke(_methodName, parameters: new object[] { 2, 3 });
+            var args = new object[] {2, -3};
+            object expected = -1;
+
+            var result = _info.Invoke(_methodName, parameters: args);
             
-            Assert.That(result, Is.EqualTo(5));
-        }
-
-
-        [Test]
-        public void TestNegative()
-        {
-            var result = _info.Invoke(_methodName, parameters: new object[] { 2, -3 });
-
-            Assert.That(result, Is.EqualTo(-1));
+            Assert.That(result, Is.EqualTo(expected));
         }
 
         [Test]

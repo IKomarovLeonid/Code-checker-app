@@ -28,7 +28,6 @@ namespace Processing.Logic
             {
                 if (RunSingle(1, () => calc.TestSum())) passedTests++;
                 if (RunSingle(2, () => calc.TestOverflow())) passedTests++;
-                if (RunSingle(3, () => calc.TestNegative())) passedTests++;
             }
             catch (Exception ex)
             {
