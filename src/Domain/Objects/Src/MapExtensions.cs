@@ -18,5 +18,14 @@ namespace Objects
             CreatedUtc = dto.CreatedUtc,
             UpdatedUtc = dto.UpdatedUtc
         };
+
+        public static CodeTask ToModel(this CodeTaskDto dto) => new CodeTask()
+        {
+            CreatedUtc = dto.CreatedUtc,
+            UpdatedUtc = dto.UpdatedUtc,
+            Id = dto.Id,
+            Description = dto.Description,
+            Title = dto.Title
+        };
     }
 }

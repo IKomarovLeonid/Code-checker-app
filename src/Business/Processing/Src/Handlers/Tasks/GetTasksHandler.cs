@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Database;
 using MediatR;
+using Objects;
 using Objects.Dto;
 using Objects.Models;
 using Processing.Queries;
@@ -22,14 +23,7 @@ namespace Processing.Handlers.Tasks
         {
             var items = await _storage.GetAllAsync(cancellationToken);
 
-            return SelectResult<CodeTask>.Fetched(items.Select(t => new CodeTask()
-            {
-                Id = t.Id,
-                Title = t.Title,
-                Description = t.Description,
-                CreatedUtc = t.CreatedUtc,
-                UpdatedUtc = t.UpdatedUtc
-            }).ToList());
+            return SelectResult<CodeTask>.Fetched(items.Select(t => t.ToModel()).ToList());
         }
     }
 }

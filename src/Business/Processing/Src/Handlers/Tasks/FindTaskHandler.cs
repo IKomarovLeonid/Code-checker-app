@@ -5,6 +5,7 @@ using Objects.Models;
 using Processing.Queries;
 using System.Threading;
 using System.Threading.Tasks;
+using Objects;
 
 namespace Processing.Handlers.Tasks
 {
@@ -23,14 +24,7 @@ namespace Processing.Handlers.Tasks
 
             if (dto == null) { return FindResult<CodeTask>.Failed($"Task with id {request.Id} does not exists", OperationState.NotFound);}
 
-            return FindResult<CodeTask>.Applied(new CodeTask()
-            {
-                Id = dto.Id,
-                Title = dto.Title,
-                Description = dto.Description,
-                CreatedUtc = dto.CreatedUtc,
-                UpdatedUtc = dto.UpdatedUtc
-            });
+            return FindResult<CodeTask>.Applied(dto.ToModel());
         }
     }
 }
